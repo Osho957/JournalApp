@@ -27,37 +27,4 @@ public class User {
     @DBRef
     private List<JournalEntry> journalEntries = new ArrayList<>();
     private List<String> roles;
-
-
-    public @NonNull String getUsername() {
-        return username;
-    }
-
-    public void setUsername(@NonNull String username) {
-        this.username = username;
-    }
-
-    public @NonNull String getPassword() {
-        return password;
-    }
-
-    public void setPassword(@NonNull String password) {
-        this.password = password;
-    }
-
-    public List<JournalEntry> getJournalEntries() {
-        return journalEntries;
-    }
-
-    public void setJournalEntries(List<JournalEntry> journalEntries) {
-        this.journalEntries = journalEntries;
-    }
-
-    public List<String> getRoles() {
-        return roles;
-    }
-
-    public void setRoles(List<String> roles) {
-        this.roles = roles;
-    }
 }
