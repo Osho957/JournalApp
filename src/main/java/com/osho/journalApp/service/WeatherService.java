@@ -1,7 +1,7 @@
 package com.osho.journalApp.service;
 
-import com.osho.journalApp.Constants.Placeholders;
-import com.osho.journalApp.Enums.CacheKeys;
+import com.osho.journalApp.constants.Placeholders;
+import com.osho.journalApp.enums.CacheKeys;
 import com.osho.journalApp.cache.AppCache;
 import com.osho.journalApp.response.WeatherResponse;
 import com.osho.journalApp.util.URLValidator;
@@ -23,8 +23,6 @@ public class WeatherService {
 
     @Value("${weather.api.key}")
     private String apiKey;
-
-
 
     @Autowired
     public WeatherService(RestTemplate restTemplate, URLValidator urlValidator, AppCache appCache) {

@@ -1,4 +1,4 @@
-package com.osho.journalApp.Constants;
+package com.osho.journalApp.constants;
 
 public class Placeholders {
     public static final String CITY = "<city_name>";

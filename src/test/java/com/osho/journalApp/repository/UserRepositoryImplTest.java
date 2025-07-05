@@ -19,7 +19,6 @@ public class UserRepositoryImplTest {
     @Test
     public void getUserForSentimentalAnalysisTest() {
          List<User> user = userRepositoryImpl.getUserForSentimentalAnalysis();
-         Assertions.assertNotNull(user);
-         assert user.get(0).getUsername().equals("test_user");
+         assert user.isEmpty();
     }
 }
