@@ -3,14 +3,14 @@ server:
 spring:
   data:
     mongodb:
-      uri: mongodb+srv://${MONGO_USERNAME}:${MONGO_PASSWORD}@mongo.nejxuk3.mongodb.net/
+      uri: mongodb://localhost:27017/
       database: journaldb
       auto-index-creation: true
   mail:
     host: smtp.gmail.com
     port: 587
     username: rajy3600@gmail.com
-    password: ${GMAIL_PASSWORD}
+    password: jflk ojgy rhgb linj
     properties:
       mail:
         smtp:
@@ -22,4 +22,4 @@ spring:
 
 weather:
   api:
-    key: ${WEATHER_API_KEY}
+    key: "test-weather-api-key"

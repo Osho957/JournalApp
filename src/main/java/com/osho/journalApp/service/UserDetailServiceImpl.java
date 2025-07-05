@@ -2,8 +2,6 @@ package com.osho.journalApp.service;
 
 import com.osho.journalApp.entities.User;
 import com.osho.journalApp.repository.UserEntryRepository;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.*;
 import org.springframework.stereotype.Service;
