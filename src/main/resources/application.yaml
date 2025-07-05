@@ -1,3 +1,9 @@
 spring:
   profiles:
     active: dev
+
+weather:
+  api:
+    key: ${WEATHER_API_KEY}
+    url: "http://api.weatherstack.com/"
+
