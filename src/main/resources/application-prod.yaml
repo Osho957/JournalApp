@@ -1,0 +1,8 @@
+server:
+  port: 8080
+spring:
+  data:
+    mongodb:
+      uri: mongodb+srv://${MONGO_USERNAME}:${MONGO_PASSWORD}@mongo.nejxuk3.mongodb.net/
+      database: journaldb
+      auto-index-creation: true
