@@ -1,6 +1,11 @@
 server:
   port: 8080
 spring:
+  redis:
+    host: ${REDIS_HOST}
+    port: ${REDIS_PORT}
+    username: default
+    password: ${REDIS_PASSWORD}
   data:
     mongodb:
       uri: mongodb+srv://${MONGO_USERNAME}:${MONGO_PASSWORD}@mongo.nejxuk3.mongodb.net/

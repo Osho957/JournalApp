@@ -19,32 +19,43 @@ public class WeatherService {
     private final RestTemplate restTemplate;
     private final URLValidator urlValidator;
     private final AppCache appCache;
+    private final RedisService redisService;
 
 
     @Value("${weather.api.key}")
     private String apiKey;
 
     @Autowired
-    public WeatherService(RestTemplate restTemplate, URLValidator urlValidator, AppCache appCache) {
+    public WeatherService(RestTemplate restTemplate, URLValidator urlValidator, AppCache appCache, RedisService redisService) {
         this.restTemplate = restTemplate;
         this.urlValidator = urlValidator;
         this.appCache = appCache;
+        this.redisService = redisService;
     }
 
     public WeatherResponse getWeather(String city) {
         if (!urlValidator.isValidCity(city)) {
             throw new IllegalArgumentException("Invalid city name provided");
         }
-        String weatherUrl =  appCache.APP_CACHE.get(CacheKeys.WEATHER_API.toString()).replace(Placeholders.API_KEY, apiKey).replace(Placeholders.CITY, city);
-
-        if (!urlValidator.isValidWeatherApiUrl(weatherUrl)) {
-            throw new SecurityException("Invalid weather API URL");
-        }
-        ResponseEntity<WeatherResponse> weatherResponse =  restTemplate.exchange(weatherUrl, HttpMethod.GET, null, WeatherResponse.class);
-        if (weatherResponse.getStatusCode().is2xxSuccessful()) {
-            return weatherResponse.getBody();
+        WeatherResponse cachedWeather = redisService.get(CacheKeys.WEATHER_CACHE +"-"+ city.toUpperCase(), WeatherResponse.class);
+        if (cachedWeather != null) {
+            return cachedWeather;
         } else {
-            throw new ResponseStatusException(weatherResponse.getStatusCode(), "Failed to get weather data");
+            String weatherUrl = appCache.APP_CACHE.get(CacheKeys.WEATHER_API.toString()).replace(Placeholders.API_KEY, apiKey).replace(Placeholders.CITY, city);
+
+            if (!urlValidator.isValidWeatherApiUrl(weatherUrl)) {
+                throw new SecurityException("Invalid weather API URL");
+            }
+            ResponseEntity<WeatherResponse> weatherResponse = restTemplate.exchange(weatherUrl, HttpMethod.GET, null, WeatherResponse.class);
+            if (weatherResponse.getStatusCode().is2xxSuccessful()) {
+                WeatherResponse response =  weatherResponse.getBody();
+                if (response != null) {
+                    redisService.set(CacheKeys.WEATHER_CACHE +"-"+ city.toUpperCase(), response, 300L);
+                }
+                return response;
+            } else {
+                throw new ResponseStatusException(weatherResponse.getStatusCode(), "Failed to get weather data");
+            }
         }
     }
 }
